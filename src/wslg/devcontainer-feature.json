@@ -1,0 +1,34 @@
+{
+    "name": "WSLg",
+    "id": "wslg",
+    "version": "0.1.0",
+    "description": "Enable WSLg GUI and GPU acceleration support in a dev container.",
+    "options": {
+        "useKisakPpa": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use the kisak Mesa PPA for newer Mesa and Vulkan packages."
+        }
+    },
+    "privileged": true,
+    "mounts": [
+        {
+            "source": "/usr/lib/wsl",
+            "target": "/usr/lib/wsl",
+            "type": "bind"
+        },
+        {
+            "source": "/mnt/host/wslg",
+            "target": "/mnt/wslg",
+            "type": "bind"
+        }
+    ],
+    "containerEnv": {
+        "DISPLAY": ":0",
+        "WAYLAND_DISPLAY": "wayland-0",
+        "XDG_RUNTIME_DIR": "/mnt/wslg/runtime-dir",
+        "LD_LIBRARY_PATH": "/usr/lib/wsl/lib",
+        "GALLIUM_DRIVER": "d3d12"
+    },
+    "postCreateCommand": "ln -s /mnt/wslg/.X11-unix /tmp/.X11-unix"
+}
